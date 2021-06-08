@@ -1,0 +1,592 @@
+@import url('https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap');
+
+//  Declare color & font variables
+$color1: #0C1618;
+$color1-2: rgb(24, 32, 34);
+$color2: #004643;
+$color2-2: #10514C;
+$color3: #7D9D8B;
+$color4: #FAF4D3;
+$color5: #D1AC00;
+$color5-2: rgb(171,141,0);
+$color6: #F6BE9A;
+$color7: rgb(193, 195, 207);
+
+$primaryFont: 'Mina', sans-serif;
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: $color4;
+    background-color: $color1;
+    font-family: $primaryFont !important;
+}
+
+button:not(.close), input, optgroup, select, textarea, h1, h2, h3, h4, h5, .ui.message .header {
+    font-family: $primaryFont !important;
+}
+
+#root {
+    position: relative;
+    min-height: 100vh;
+}
+
+#content-wrap {
+    padding-bottom: 80px;
+}
+
+//  Navbar 1
+#navbar-toggler {
+    z-index: 444;
+}
+
+//  Navbar 1 - logo
+.navbar-brand {
+    max-width: 170px;
+}
+
+.navbar-brand img {
+    width: 100%;
+}
+
+//  Navbar 1 - links
+.nav-link {
+    font-size: 16px;
+}
+
+//  Navbar 1 - collapse overlay
+.nav-collapse-overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.92);
+    overflow-x: hidden;
+    transition: 0.7s;
+
+    ul {
+        padding-left: 16vw;
+        padding-right: 16vw;
+    }
+
+    a {
+        margin: 15px 50px;
+        text-decoration: none;
+        font-size: 26px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+
+        &:hover, &:focus {
+            color: #f1f1f1;
+        }
+    }
+
+    .closebtn {
+        position: absolute;
+        margin: 0 !important;
+        top: 35px;
+        right: 30px;
+        font-size: 60px;
+    }
+}
+
+.nav-collapse-overlay-content {
+    position: relative;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+}
+
+//  Navbar 2
+.filters-container {
+    position: relative;
+    padding-top: 114px !important;
+    z-index: 443;
+}
+
+//  Navbar 2 - semantic-iu buttons & inputs
+.add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+    font-size: 13px;
+}
+
+.filters-container .ui.button, .filters-container input {
+    height: 38px;
+}
+
+//  Navbar 2 - semantic-iu toggle
+.semantic-toggle label {
+    color: white !important;
+    font-size: 15px !important;
+}
+
+.semantic-toggle:not(.checked) label:before {
+    background-color: #BCC9AF !important;
+}
+
+.semantic-toggle:not(.checked):hover label:before {
+    background-color: #A9B49D !important;
+}
+
+.ui.toggle.checkbox input:checked~label:before, .ui.toggle.checkbox input:focus:checked~label:before {
+    background-color: $color5 !important;
+}
+
+.ui.toggle.checkbox:hover input:checked~label:before, .ui.toggle.checkbox:hover input:focus:checked~label:before {
+    background-color: $color5-2 !important;
+
+}
+
+.ui.toggle.checkbox input:checked~label, .ui.toggle.checkbox input:focus:checked~label  {
+    color: white !important;
+}
+
+//  Navbar 2 - semantic-iu toggle - remove :hover effect when disabled
+.semantic-toggle input[type="checkbox"]:disabled~label:hover::before {
+    background-color: #BCC9AF !important;
+}
+
+//  Navbar 2 - semantic-iu toggle - align vertically to the middle
+.valign-parent {
+    display: table;
+    height: 38px;
+
+    .valign {
+        display:  table-cell;
+        vertical-align: middle;
+
+        * {
+            margin: 0;
+        }
+    }
+}
+
+// Semantic-iu dropdowns
+a.ui.label {
+    font-weight: 400;
+    font-size: 13px !important;
+}
+
+// Clear filters btn
+#clearFilters {
+    font-size: 15px;
+    color: rgb(74, 80, 82);
+
+    &:hover {
+        color: $color1;
+    }
+}
+
+// CardList
+.cardList-container {
+    padding-top: 50px;
+}
+
+.no-cards {
+    color: $color6;
+
+    &:hover {
+        color: #f3a777;
+    }
+}
+
+// CardList - improve default Bootstrap to allow for 5 columns in a row (12/5 = 2.4)
+.col-xl-2dot4 {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+// CardList - Card
+.card-front {
+    background-color: $color2;
+}
+
+// CardList - Card - Highlight picked title
+.border-success {
+    border-color: $color5 !important;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: 0 0 20px $color5;
+}
+
+// CardList - Card - Poster
+.card-img-top.poster {
+    width: 100%;
+    height: 37vh;
+    max-height: 300px;
+    object-fit: cover;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.poster-overlay {
+    position: relative;
+}
+
+.poster-overlay-text-wrapper {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-58%, -58%);
+    -ms-transform: translate(-58%, -58%);
+    text-align: center;
+}
+
+.poster-overlay-text {
+    color: white;
+    font-size: 25px;
+    padding: 16px 32px;
+}
+
+.poster-overlay:hover .poster {
+    opacity: 0.3;
+}
+
+.poster-overlay:hover .poster-overlay-text-wrapper  {
+    opacity: 1;
+}
+
+// Dim watched cards
+.card.watched .poster-overlay .poster {
+    opacity: 0.25;
+}
+
+.card.watched .poster-overlay:hover .poster {
+    opacity: 0.6;
+}
+
+.card.watched .card-body *:not(.card-front-toggler) {
+    opacity: 0.8;
+}
+
+.card.watched .card-title {
+    opacity: 0.5 !important;
+}
+
+// CardList - Card - Toggler
+.card-front-toggler {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: $color5 !important;
+
+    &:hover {
+        background-color: $color5-2 !important;
+    }
+}
+
+.card-front-toggler.ui.button.toggle.active {
+    background-color: $color1 !important;
+
+    &:hover {
+        background-color: $color1-2 !important;
+    }
+}
+
+// CardList - Card - Ratings
+.rating-container {
+    padding-left: 9px;
+    padding-right: 9px;
+}
+
+.rating-icon-img {
+    width: 100%;
+    max-width: 40px;
+    min-width: 22px;
+}
+
+.rating {
+    color: $color7;
+    font-size: 13px;
+}
+
+.btn-static {
+    cursor: default !important;
+}
+
+.card-title {
+    color: $color4;
+    font-size: 15px;
+    height: 2.5em;
+    font-family: $primaryFont;
+    margin-top: 10px !important;
+    margin-bottom: 8px !important;
+}
+
+.added-on-info {
+    color: $color7 !important;
+    font-size: 11px;
+}
+
+// CardBack modals
+.modal:nth-of-type(even) {
+    z-index: 1052 !important;
+}
+
+.modal-backdrop.show:nth-of-type(odd) {
+    z-index: 1051 !important;
+}
+
+.modal-title {
+    font-size: 16px;
+}
+
+.poster-back {
+    width: 100%;
+    height: auto;
+}
+
+.modal .rating {
+    color: $color4;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+// Form add/edit
+.cardForm-elements {
+    height: 36px;
+}
+
+.padding-fix {
+    padding-top: 7px !important;
+}
+
+.input-group-text {
+    background-color : #d1d1d1;
+    width: 100%;
+}
+
+::placeholder {
+    color: #d1d1d1 !important;
+}
+
+.input-group-prepend:not(.prepend-original) {
+    min-width: 28%;
+}
+
+.rating-icon-form {
+    max-height: 21px;
+}
+
+.bottom-border-fix {
+    border-top-right-radius: 0.0001rem !important;
+    border-bottom-right-radius: 0.0001rem !important;
+}
+
+.invalid-feedback {
+    color: #8B0000;
+    font-size: 87%;
+}
+
+// Form add/edit - fetch modal
+.modal-imdb {
+    background-color: $color2;
+}
+
+// UserSignIn page - vertical dividers
+.ui.vertical.divider::before, .ui.vertical.divider::after {
+    background-color: $color2 !important;
+    opacity: 0.4 !important;
+}
+
+// UserSignIn page - horizontal dividers
+.ui.horizontal.divider::before, .ui.horizontal.divider::after {
+    background-image: url(data:image/png;base64,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Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHRpZmY6UmVzb2x1dGlvblVuaXQ+MjwvdGlmZjpSZXNvbHV0aW9uVW5pdD4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6Q29tcHJlc3Npb24+MTwvdGlmZjpDb21wcmVzc2lvbj4KICAgICAgICAgPHRpZmY6UGhvdG9tZXRyaWNJbnRlcnByZXRhdGlvbj4yPC90aWZmOlBob3RvbWV0cmljSW50ZXJwcmV0YXRpb24+CiAgICAgICAgIDxleGlmOlBpeGVsWURpbWVuc2lvbj42NjI8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MjwvZXhpZjpQaXhlbFhEaW1lbnNpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgpQtkGhAAAAWElEQVRYCe3WMQrAMAgAwBb60Tyic79tpmTILoRCaMO5Kqjn4lmeux2CAAECBAgQILCbQPrhjGRaspvHgn2uGrGgjRYECBAgQIAAge8J/PKxnBp6qvj1gTrv5gs9pnqqzgAAAABJRU5ErkJggg==
+    )
+}
+
+// UserSignIn page - registration icon
+i.signup.icon {
+    color: white;
+    opacity: 1 !important;
+}
+
+// UserSignIn & Reg page - error messages
+.ui.pointing.above.prompt.label {
+    font-size: 0.79rem;
+}
+
+// Footer
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    padding-top: 35px;
+
+    p a {
+        color: $color6;
+
+        &:hover {
+            color: $color5;
+            text-decoration: none;
+        }
+    }
+}
+
+// General - Switch btn 'watched/unwatched'
+.switch.btn {
+    width: 100%;
+    height: 36px;
+
+    .switch-handle {
+        background-color: $color7;
+        border-color: $color7;
+    }
+}
+
+// General: truncates Card title to 2 lines
+.block-ellipsis {
+    display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+// General: container for CardForm, SignIn & Reg - sets equal distance from the top
+.pageForm-container {
+    padding-top: 140px;
+}
+
+// General: semantic-iu buttons
+.semantic-btn {
+    background: $color2 !important;
+    color: white !important;
+
+    &:hover {
+        background: $color2-2 !important;
+    }
+}
+
+// Media queries
+@media (max-width: 1199px) {
+    .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 991px) {
+    .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+        font-size: 9px;
+    }
+
+    #filter-toggler {
+        font-size: 12px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width: 767px) {
+    .navbar-collapse.show .bottom-ul {
+        padding-bottom: 100vh;
+    } 
+
+    .navbar-brand {
+        max-width: 110px;
+    }
+    
+    .filters-container {
+        padding-top: 89px !important;
+    }
+
+    .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+        font-size: 11px;
+    }
+
+    .pageForm-container {
+        padding-top: 90px;
+    }
+}
+
+@media (max-width: 500px) {
+    .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+        font-size: 10px;
+    }
+
+    #filter-toggler {
+        font-size: 11px;
+    }
+
+    .input-group-prepend:not(.prepend-original) {
+        width: 31%;
+    }
+
+    .cardList-container {
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-front .rating-container {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .added-on-info {
+        font-size: 9px;
+    }
+
+    #filter-toggler {
+        font-size: 9px;
+    }
+
+    .nav-collapse-overlay a {
+        margin: 10px 20px;
+
+    }
+
+    #card-form {
+        margin-top: 5px;
+        padding: 11px !important;
+
+        & * {
+            font-size: 13px !important;
+        }
+    }
+
+    .semantic-toggle label {
+        font-size: 14px !important;
+    }
+
+    #clearFilters {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    .nav-collapse-overlay a {
+        font-size: 18px;
+        margin: 5px 50px;
+    }
+}
+
+@media (min-width: 768px) {
+    #sleek-nav {
+        width: 0% !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-xl-2dot4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
