@@ -7,6 +7,14 @@
 
 ## Running the app
 ```
+nvm install 14.17.0
+```
+
+```
+nvm use 14.17.0
+```
+
+```
 git clone https://github.com/monbird/movie-test.git
 ```
 
