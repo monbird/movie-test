@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
-import apis from '../api';
 import Card from './Card';
 import CardListControllers from './CardListControllers';
+import { getAllPieces } from '../actions/pieceActions';
 
 class CardList extends Component {
     REFRESHER_ALLOWED_ACTIONS = [
@@ -135,11 +136,16 @@ class CardList extends Component {
     ];
 
     componentDidMount = async () => {
+        console.log('this.props.piecesList:', this.props.piecesList);
         let pieces = [];
         if (this.props.type === 'movie') {
-            pieces = this.PIECES.filter((piece) => piece.type === 'movie');
+            pieces = this.props.piecesList.filter(
+                (piece) => piece.type === 'movie'
+            );
         } else if (this.props.type === 'series') {
-            pieces = this.PIECES.filter((piece) => piece.type === 'series');
+            pieces = this.props.piecesList.filter(
+                (piece) => piece.type === 'series'
+            );
         }
 
         this.setState({
@@ -368,4 +374,27 @@ class CardList extends Component {
     }
 }
 
-export default CardList;
+const mapStateToProps = (state) => ({
+    piecesList: state.piecesList || [],
+});
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+    return Object.assign({}, ownProps, stateProps, dispatchProps);
+};
+
+export default connect(mapStateToProps, {}, mergeProps)(CardList);
+
+// Links.propTypes = {
+//     signOutUser: PropTypes.func.isRequired,
+//     auth: PropTypes.object.isRequired
+// };
+
+// const mapStateToProps = (state) => ({
+//     auth: state.auth
+// });
+
+// const mergeProps = (stateProps, dispatchProps, ownProps) => {
+//     return Object.assign({}, ownProps, stateProps, dispatchProps);
+// };
+
+// export default connect(mapStateToProps, { signOutUser }, mergeProps)(Links);

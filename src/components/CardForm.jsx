@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import $ from 'jquery';
 import { Icon } from 'semantic-ui-react';
 import { toast } from 'react-toastify';
@@ -9,6 +10,7 @@ import icon_rt from '../images/icon-rt.png';
 import ModalImdb from './ModalImbd';
 import { SwitchButton } from './ActionButtons';
 import apis from '../api';
+import { appendPiece } from '../actions/pieceActions';
 
 class CardForm extends Component {
     constructor(props) {
@@ -128,7 +130,7 @@ class CardForm extends Component {
 
         if (this.props.id) {
             //TODO implement this method in parent
-           // this.props.updatePiece(imdb_id, payload);
+            // this.props.updatePiece(imdb_id, payload);
 
             this.setState({
                 doRedirect: true,
@@ -146,6 +148,8 @@ class CardForm extends Component {
         } else {
             //TODO implement this method in parent
             //this.props.addNewPiece(payload);
+            this.props.appendPiece(payload);
+            console.log('should be appended');
 
             this.setState({
                 doRedirect: true,
@@ -628,4 +632,8 @@ class CardForm extends Component {
     }
 }
 
-export default CardForm;
+const mapStateToProps = (state) => ({
+    pieces: state.pieces,
+});
+
+export default connect(mapStateToProps, { appendPiece })(CardForm);
