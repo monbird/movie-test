@@ -1,12 +1,13 @@
 import {
     APPEND_PIECE,
     UPDATE_PIECE,
-    GET_ONE_PIECE,
+    REPLACE_PIECE,
+    SET_PIECE,
     DELETE_PIECE,
-    GET_ALL_PIECES,
 } from '../actions/types';
 
 const initialState = {
+    selectedPiece: null,
     piecesList: [
         {
             title: 'The Mask',
@@ -22,7 +23,7 @@ const initialState = {
             rating_imdb: '6.9',
             rating_rt: '79',
             imdb_id: 'tt0110475',
-            is_watched: true,
+            is_watched: false,
             type: 'movie',
         },
         {
@@ -40,7 +41,7 @@ const initialState = {
             rating_rt: 91,
             imdb_id: 'tt0111161',
             type: 'movie',
-            is_watched: true,
+            is_watched: false,
         },
         {
             title: 'Parasite',
@@ -74,7 +75,7 @@ const initialState = {
             rating_rt: 94,
             imdb_id: 'tt2582802',
             type: 'movie',
-            is_watched: true,
+            is_watched: false,
         },
         {
             title: 'My Octopus Teacher',
@@ -91,7 +92,7 @@ const initialState = {
             rating_rt: 97,
             imdb_id: 'tt12888462',
             type: 'movie',
-            is_watched: true,
+            is_watched: false,
         },
         {
             title: 'Bogowie',
@@ -125,7 +126,7 @@ const initialState = {
             rating_rt: 94,
             imdb_id: 'tt1504320',
             type: 'movie',
-            is_watched: true,
+            is_watched: false,
         },
         {
             title: 'The Reader',
@@ -142,7 +143,7 @@ const initialState = {
             rating_rt: 63,
             imdb_id: 'tt0976051',
             type: 'movie',
-            is_watched: true,
+            is_watched: false,
         },
         {
             title: "One Flew Over the Cuckoo's Nest",
@@ -159,20 +160,84 @@ const initialState = {
             rating_rt: 94,
             imdb_id: 'tt0073486',
             type: 'movie',
+            is_watched: false,
+        },
+        {
+            title: 'Six Feet Under',
+            year: '2001–2005',
+            runtime: '55 min',
+            genre: 'Comedy, Drama',
+            director: 'N/A',
+            cast: 'Peter Krause, Michael C. Hall, Frances Conroy',
+            plot: 'A chronicle of the lives of a dysfunctional family who run an independent funeral home in Los Angeles.',
+            language: 'English',
+            country: 'USA',
+            poster: 'https://m.media-amazon.com/images/M/MV5BMTQzODk5N2UtYjE4ZC00YWM1LWJkMGYtYmY2NjNjMjIzZDRmXkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg',
+            rating_imdb: '8.7',
+            imdb_id: 'tt0248654',
+            type: 'series',
+            is_watched: false,
+        },
+        {
+            title: 'Breaking Bad',
+            year: '2008–2013',
+            runtime: '49 min',
+            genre: 'Crime, Drama, Thriller',
+            director: 'N/A',
+            cast: 'Bryan Cranston, Aaron Paul, Anna Gunn',
+            plot: "A high school chemistry teacher diagnosed with inoperable lung cancer turns to manufacturing and selling methamphetamine in order to secure his family's future.",
+            language: 'English, Spanish',
+            country: 'USA',
+            poster: 'https://m.media-amazon.com/images/M/MV5BMjhiMzgxZTctNDc1Ni00OTIxLTlhMTYtZTA3ZWFkODRkNmE2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg',
+            rating_imdb: '9.4',
+            rating_rt: 96,
+            imdb_id: 'tt0903747',
+            type: 'series',
             is_watched: true,
+        },
+        {
+            title: 'Stranger Things',
+            year: '2016-',
+            runtime: '51 min',
+            genre: 'Drama, Fantasy, Horror',
+            director: 'N/A',
+            cast: 'Millie Bobby Brown, Finn Wolfhard, Winona Ryder',
+            plot: 'When a young boy disappears, his mother, a police chief and his friends must confront terrifying supernatural forces in order to get him back.',
+            language: 'English, Russian',
+            country: 'USA',
+            poster: 'https://m.media-amazon.com/images/M/MV5BN2ZmYjg1YmItNWQ4OC00YWM0LWE0ZDktYThjOTZiZjhhN2Q2XkEyXkFqcGdeQXVyNjgxNTQ3Mjk@._V1_SX300.jpg',
+            rating_imdb: '8.7',
+            imdb_id: 'tt4574334',
+            type: 'series',
+            is_watched: false,
+        },
+        {
+            title: 'Twin Peaks',
+            year: '1990–1991',
+            runtime: '47 min',
+            genre: 'Crime, Drama, Mystery, Thriller',
+            director: 'N/A',
+            cast: 'Kyle MacLachlan, Michael Ontkean, Mädchen Amick, Dana Ashbrook',
+            plot: 'An idiosyncratic FBI agent investigates the murder of a young woman in the even more idiosyncratic town of Twin Peaks.',
+            language: 'English, Icelandic, Afrikaans, Norwegian',
+            country: 'USA',
+            poster: 'https://m.media-amazon.com/images/M/MV5BMTExNzk2NjcxNTNeQTJeQWpwZ15BbWU4MDcxOTczOTIx._V1_SX300.jpg',
+            rating_imdb: '8.8',
+            rating_rt: 13,
+            imdb_id: 'tt0098936',
+            type: 'series',
+            is_watched: false,
         },
     ],
 };
 
-export default function reduce(state = initialState, action) {
+const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_ONE_PIECE:
+        case SET_PIECE:
             const piece = state.piecesList.filter((piece) => {
                 return piece.imdb_id === action.payload.imdb_id;
             })[0];
-            return piece;
-        case GET_ALL_PIECES:
-            return state.piecesList;
+            return { ...state, selectedPiece: piece };
         case UPDATE_PIECE:
             const updatedPieces = state.piecesList.map((piece) => {
                 if (piece.imdb_id === action.payload.imdb_id) {
@@ -182,6 +247,19 @@ export default function reduce(state = initialState, action) {
                 }
             });
             return { ...state, piecesList: updatedPieces };
+        case REPLACE_PIECE:
+            const replacedPieces = state.piecesList.map((piece) => {
+                if (piece.imdb_id === action.payload.imdb_id) {
+                    return action.payload.body;
+                } else {
+                    return piece;
+                }
+            });
+            return {
+                ...state,
+                piecesList: replacedPieces,
+                selectedPiece: action.payload.body,
+            };
         case DELETE_PIECE:
             const updatedList = state.piecesList.filter((piece) => {
                 return piece.imdb_id !== action.payload.imdb_id;
@@ -195,4 +273,6 @@ export default function reduce(state = initialState, action) {
         default:
             return state;
     }
-}
+};
+
+export default reducer;

@@ -9,8 +9,11 @@ import icon_imdb from '../images/icon-imdb.png';
 import icon_rt from '../images/icon-rt.png';
 import ModalImdb from './ModalImbd';
 import { SwitchButton } from './ActionButtons';
-import { appendPiece, getOnePiece } from '../actions/pieceActions';
-import { GET_ONE_PIECE } from '../actions/types';
+import {
+    updatePiece,
+    replacePiece,
+    appendPiece,
+} from '../actions/pieceActions';
 
 class CardForm extends Component {
     constructor(props) {
@@ -18,7 +21,7 @@ class CardForm extends Component {
         this.state = {
             type_plural:
                 this.props.type === 'movie' ? 'movies' : this.props.type,
-            doRedirect: false,
+            redirectTo: null,
             refreshModal: false,
             modalShown: false,
         };
@@ -30,45 +33,43 @@ class CardForm extends Component {
         this.preventEnter = this.preventEnter.bind(this);
     }
 
-    componentDidMount() {
-        if (this.props.imdb_id) {
-
-            // dispatch({
-            //     type: GET_ONE_PIECE,
-            //     payload: { imdb_id: this.props.imdb_id },
-            // });
-            // apis.getMovieOrSeriesById(this.props.id)
-            //     .then((response) => {
-            //         this.setState({ ...response.data.data });
-            //     })
-            //     .catch((error) => {
-            //         this.setState({
-            //             doRedirect: true,
-            //         });
-            //         let msg =
-            //             "👎 We couldn't find the " +
-            //             this.props.type +
-            //             ' you are after!';
-            //         toast.error(msg);
-            //     });
-        } else {
+    componentDidUpdate(prevProps) {
+        if (
+            this.props.selectedPiece &&
+            !this.state.imdb_id &&
+            !this.props.create
+        ) {
             this.setState({
-                title: '',
-                year: '',
-                genre: '',
-                country: '',
-                language: '',
-                director: '',
-                cast: '',
-                runtime: '',
-                platform: '',
-                plot: '',
-                rating_imdb: '',
-                rating_rt: '',
-                comments: '',
-                is_watched: false,
+                ...this.props.selectedPiece,
+                redirectTo: null,
             });
         }
+
+        if (this.props.imdb_id !== prevProps.imdb_id) {
+            this.setState({
+                ...this.props.selectedPiece,
+                redirectTo: null,
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            title: '',
+            year: '',
+            genre: '',
+            country: '',
+            language: '',
+            director: '',
+            cast: '',
+            runtime: '',
+            platform: '',
+            plot: '',
+            rating_imdb: '',
+            rating_rt: '',
+            comments: '',
+            is_watched: false,
+        });
 
         $('[data-toggle="tooltip"]').tooltip();
     }
@@ -133,40 +134,28 @@ class CardForm extends Component {
             poster: this.state.poster,
         };
 
-        if (this.props.id) {
-            // TODO: make this working
-            // this.props.updatePiece(imdb_id, payload);
-
-            this.setState({
-                doRedirect: true,
-            });
-
-            let typeTitle =
-                payload.type.charAt(0).toUpperCase() + payload.type.slice(1);
-            let shortenedTitle = payload.title;
-            if (shortenedTitle.length > 35) {
-                shortenedTitle = shortenedTitle.slice(0, 35) + '...';
-            }
-
-            let msg = '👍 ' + typeTitle + ' "' + shortenedTitle + '" updated!';
-            toast.dark(msg);
+        if (this.props.selectedPiece && !this.props.create) {
+            this.props.dispatch(updatePiece(payload));
         } else {
-            this.props.appendPiece(payload);
-
-            this.setState({
-                doRedirect: true,
-            });
-
-            let typeTitle =
-                payload.type.charAt(0).toUpperCase() + payload.type.slice(1);
-            let shortenedTitle = payload.title;
-            if (shortenedTitle.length > 35) {
-                shortenedTitle = shortenedTitle.slice(0, 35) + '...';
-            }
-
-            let msg = '👍 ' + typeTitle + ' "' + shortenedTitle + '" created!';
-            toast.dark(msg);
+            this.props.dispatch(appendPiece(payload));
         }
+
+        this.setState({
+            redirectTo: '/' + this.state.type_plural,
+        });
+
+        let typeTitle =
+            payload.type.charAt(0).toUpperCase() + payload.type.slice(1);
+        let shortenedTitle = payload.title;
+
+        if (shortenedTitle.length > 35) {
+            shortenedTitle = shortenedTitle.slice(0, 35) + '...';
+        }
+
+        let action = this.props.create ? 'created' : 'updated';
+        let msg =
+            '👍 ' + typeTitle + ' "' + shortenedTitle + '" ' + action + '!';
+        toast.dark(msg);
     };
 
     processYearData = (str) => {
@@ -207,7 +196,7 @@ class CardForm extends Component {
 
     overwriteWithApiDetails = (data, source) => {
         if (source === 'imdb') {
-            this.setState({
+            const body = {
                 title: data.title,
                 year: this.processYearData(data.year),
                 genre: data.genre,
@@ -220,17 +209,36 @@ class CardForm extends Component {
                 rating_imdb: data.rating_imdb,
                 rating_rt: data.rating_rt,
                 poster: data.poster,
-                imdb_id: data.imdbid,
-            });
+                imdb_id: data.imdb_id,
+            };
+
+            if (this.props.selectedPiece && !this.props.create) {
+                this.props.dispatch(
+                    replacePiece({
+                        imdb_id: this.props.selectedPiece.imdb_id,
+                        body,
+                    })
+                );
+
+                $('#modalImdb').modal('hide');
+
+                this.setState({
+                    redirectTo: `/${this.props.type}/edit/${body.imdb_id}`,
+                });
+            } else {
+                this.setState({
+                    ...body,
+                });
+            }
         }
     };
-    d;
+
     render() {
-        if (this.state.doRedirect) {
+        if (this.state.redirectTo) {
             return (
                 <Redirect
                     to={{
-                        pathname: '/' + this.state.type_plural,
+                        pathname: this.state.redirectTo,
                     }}
                 />
             );
@@ -635,15 +643,7 @@ class CardForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    pieces: state.pieces,
+    selectedPiece: state.pieces.selectedPiece,
 });
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-    return Object.assign({}, ownProps, stateProps, dispatchProps);
-};
-
-export default connect(
-    mapStateToProps,
-    { appendPiece, getOnePiece },
-    mergeProps
-)(CardForm);
+export default connect(mapStateToProps)(CardForm);

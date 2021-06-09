@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { CardForm } from '../components'
+import { CardForm } from '../components';
 
 class MovieCreate extends Component {
     render() {
-        return (
-            <CardForm type="movie"/>
-        );
+        return <CardForm type="movie" create={true} />;
     }
 }
 

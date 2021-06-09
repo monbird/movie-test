@@ -1,6 +1,11 @@
-import { APPEND_PIECE, GET_ONE_PIECE, UPDATE_PIECE, DELETE_PIECE } from './types';
+import {
+    APPEND_PIECE,
+    UPDATE_PIECE,
+    REPLACE_PIECE,
+    SET_PIECE,
+    DELETE_PIECE,
+} from './types';
 
-// Append movie/series
 export const appendPiece = (payload) => {
     return {
         type: APPEND_PIECE,
@@ -8,9 +13,9 @@ export const appendPiece = (payload) => {
     };
 };
 
-export const getOnePiece = (payload) => {
+export const setPiece = (payload) => {
     return {
-        type: GET_ONE_PIECE,
+        type: SET_PIECE,
         payload: payload,
     };
 };
@@ -18,6 +23,13 @@ export const getOnePiece = (payload) => {
 export const updatePiece = (payload) => {
     return {
         type: UPDATE_PIECE,
+        payload: payload,
+    };
+};
+
+export const replacePiece = (payload) => {
+    return {
+        type: REPLACE_PIECE,
         payload: payload,
     };
 };

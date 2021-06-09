@@ -3,7 +3,7 @@ import { CardForm } from '../components';
 
 class SeriesCreate extends Component {
     render() {
-        return <CardForm type="series" />;
+        return <CardForm type="series" create={true} />;
     }
 }
 
