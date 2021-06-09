@@ -110,7 +110,7 @@ class CardList extends Component {
             country: 'USA',
             poster: 'https://m.media-amazon.com/images/M/MV5BOWExYjI5MzktNTRhNi00Nzg2LThkZmQtYWVkYjRlYWI2MDQ4XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg',
             rating_imdb: '6.9',
-            rating_rt: '79%',
+            rating_rt: '79',
             imdb_id: 'tt0110475',
             is_watched: true,
             type: 'movie',

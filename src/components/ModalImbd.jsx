@@ -10,43 +10,21 @@ class ModalImdb extends Component {
         this.state = {
             titles: [],
         };
-        this.myState = {
-            title: this.props.title,
-            year: this.props.year,
-        };
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        let titleOrYearDiff =
-            nextProps.title !== this.myState.title ||
-            nextProps.year !== this.myState.year;
-        let titlesDiff =
-            JSON.stringify(this.state.titles) !==
-            JSON.stringify(nextState.titles);
-        if ((nextProps.refreshMe && titleOrYearDiff) || titlesDiff) {
-            this.myState = {
-                title: this.props.title,
-                year: this.props.year,
-            };
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    componentDidUpdate() {
-        if (this.props.title) {
+    componentDidUpdate(prevProps, prevState) {
+        if (
+            this.props.title &&
+            this.props.modalShown &&
+            !prevProps.modalShown
+        ) {
             apis.getImdbTitles(this.props.title)
                 .then((titles) => {
-                    let titlesArray = [];
-                    let numOfTitles = Object.keys(titles.data.data).length;
-                    for (let i = 0; i < numOfTitles; i++) {
-                        titlesArray.push(
-                            transformOmdbFilm(titles.data.data[i])
-                        );
-                    }
+                    const transformedTitles = titles.data.Search.map((title) =>
+                        transformOmdbFilm(title)
+                    );
                     this.setState({
-                        titles: titlesArray,
+                        titles: transformedTitles,
                     });
                 })
                 .catch((error) => {
@@ -59,7 +37,6 @@ class ModalImdb extends Component {
 
     render() {
         const showTitles = this.state.titles.length > 0;
-
         return (
             <div
                 className="modal fade"

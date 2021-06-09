@@ -14,9 +14,9 @@ class ModalImdbCard extends Component {
     }
 
     fetchTitleDetails() {
-        apis.getImdbTitleDetails(this.props.data.imdbid)
+        apis.getImdbTitleDetails(this.props.data.imdb_id)
             .then((response) => {
-                const film = transformOmdbFilm(response.data.data);
+                const film = transformOmdbFilm(response.data);
                 this.props.overwriteWithApiDetails(film, 'imdb');
                 $('#modalImdb').modal('hide');
             })

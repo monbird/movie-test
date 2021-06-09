@@ -1,3 +1,13 @@
+
+const percentToDecimal = (perc) => {
+
+    perc = parseInt(perc.trim().replace('%', '').trim());
+    if(perc) {
+        return perc
+    }
+    return null;
+}
+
 const transformOmdbFilm = (film) => {
     return {
         title: film.Title,
@@ -11,7 +21,7 @@ const transformOmdbFilm = (film) => {
         is_watched: false,
         imdb_id: film.imdbID,
         rating_imdb: film.imdbRating,
-        rating_rt: film.Ratings[1]?.Value,
+        rating_rt: film.Ratings ? percentToDecimal(film.Ratings[1]?.Value) : null,
         poster: film.Poster,
         plot: film.Plot,
         type: film.type,

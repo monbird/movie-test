@@ -19,17 +19,6 @@ class CardListControllers extends Component {
         this.closeFilters = this.closeFilters.bind(this);
     }
 
-    // componentDidMount() {
-    //     let self = this;
-    //     $(document).click(function(e) {
-    //         let closest_nav = $(e.target).closest('nav');
-    //         if (!closest_nav.length) {
-    //             $('nav').find('.collapse').collapse('hide');
-    //             self.closeFilters();
-    //         }
-    //     });
-    // }
-
     componentDidUpdate() {
         if (this.state.doResetFilters !== this.props.doResetFilters) {
             this.setState({
@@ -145,7 +134,7 @@ class CardListControllers extends Component {
                                 fluid
                                 icon="search"
                                 iconPosition="left"
-                                placeholder={`Search in ${type_upper}`}
+                                placeholder={`Search in your ${type_upper} collection`}
                                 disabled={this.props.piecesAll.length <= 0}
                                 onChange={this.searchChange}
                                 value={this.state.searchPhrase}
