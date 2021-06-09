@@ -3,7 +3,7 @@ import { CardForm } from '../components';
 
 class SeriesUpdate extends Component {
     render() {
-        return <CardForm id={this.props.match.params.id} type="series" />;
+        return <CardForm imdb_id={this.props.match.params.imdb_id} type="series" />;
     }
 }
 

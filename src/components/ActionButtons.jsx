@@ -72,7 +72,7 @@ class UpdateButton extends Component {
     render() {
         return (
             <Link
-                to={`/${this.props.data.type}/edit/${this.props.data._id}`}
+                to={`/${this.props.data.type}/edit/${this.props.data.imdb_id}`}
                 className="btn btn-info w-100"
                 onClick={this.closeAllModals}
             >

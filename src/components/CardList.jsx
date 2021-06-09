@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import Card from './Card';
 import CardListControllers from './CardListControllers';
-import { getAllPieces } from '../actions/pieceActions';
 
 class CardList extends Component {
     REFRESHER_ALLOWED_ACTIONS = [
@@ -98,45 +97,7 @@ class CardList extends Component {
         this.sortPieces = this.sortPieces.bind(this);
     }
 
-    PIECES = [
-        {
-            title: 'The Mask',
-            year: '1994',
-            runtime: '101 min',
-            genre: 'Action, Comedy, Crime, Fantasy',
-            director: 'Chuck Russell',
-            cast: 'Jim Carrey, Peter Riegert, Peter Greene, Amy Yasbeck',
-            plot: 'Bank clerk Stanley Ipkiss is transformed into a manic superhero when he wears a mysterious mask.',
-            language: 'English, Swedish',
-            country: 'USA',
-            poster: 'https://m.media-amazon.com/images/M/MV5BOWExYjI5MzktNTRhNi00Nzg2LThkZmQtYWVkYjRlYWI2MDQ4XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg',
-            rating_imdb: '6.9',
-            rating_rt: '79',
-            imdb_id: 'tt0110475',
-            is_watched: true,
-            type: 'movie',
-        },
-        {
-            title: 'Sweet Tooth',
-            year: '2017',
-            runtime: '17 min',
-            genre: 'Short, Horror',
-            director: 'Zac Adams, Michael Kenneth Sydenstricker II',
-            cast: 'Jessejames Locorriere, Abbi Butler, Nye Reynolds, Michael Berryman',
-            plot: 'A gruesome entity attaches itself to an unsuspecting family.',
-            language: 'English',
-            country: 'USA',
-            poster: 'https://m.media-amazon.com/images/M/MV5BNDBkMmUyYjAtMGVkZi00Y2IwLWIzY2ItNGViNjYyZWE0YjcyXkEyXkFqcGdeQXVyMTI3NDE4Ng@@._V1_SX300.jpg',
-            rating_imdb: '8.4',
-            rating_rt: null,
-            imdb_id: 'tt6629078',
-            type: 'series',
-            is_watched: false,
-        },
-    ];
-
     componentDidMount = async () => {
-        console.log('this.props.piecesList:', this.props.piecesList);
         let pieces = [];
         if (this.props.type === 'movie') {
             pieces = this.props.piecesList.filter(
@@ -327,11 +288,11 @@ class CardList extends Component {
                 <div className="container cardList-container px-4 px-sm-3">
                     <div className="row">
                         {showCards &&
-                            this.state.piecesVisible.map((piece) => {
+                            this.state.piecesVisible.map((piece, i) => {
                                 return (
                                     <Card
                                         data={piece}
-                                        key={`key-${piece._id}`}
+                                        key={`key-${piece.imdb_id}-${i}`}
                                         highlightedMovieId={
                                             this.state.highlightedMovieId
                                         }
@@ -375,26 +336,7 @@ class CardList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    piecesList: state.piecesList || [],
+    piecesList: state.pieces.piecesList,
 });
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-    return Object.assign({}, ownProps, stateProps, dispatchProps);
-};
-
-export default connect(mapStateToProps, {}, mergeProps)(CardList);
-
-// Links.propTypes = {
-//     signOutUser: PropTypes.func.isRequired,
-//     auth: PropTypes.object.isRequired
-// };
-
-// const mapStateToProps = (state) => ({
-//     auth: state.auth
-// });
-
-// const mergeProps = (stateProps, dispatchProps, ownProps) => {
-//     return Object.assign({}, ownProps, stateProps, dispatchProps);
-// };
-
-// export default connect(mapStateToProps, { signOutUser }, mergeProps)(Links);
+export default connect(mapStateToProps, {})(CardList);

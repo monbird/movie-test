@@ -10,7 +10,8 @@ import icon_rt from '../images/icon-rt.png';
 import ModalImdb from './ModalImbd';
 import { SwitchButton } from './ActionButtons';
 import apis from '../api';
-import { appendPiece } from '../actions/pieceActions';
+import { appendPiece, getOnePiece } from '../actions/pieceActions';
+import { GET_ONE_PIECE } from '../actions/types';
 
 class CardForm extends Component {
     constructor(props) {
@@ -31,21 +32,27 @@ class CardForm extends Component {
     }
 
     componentDidMount() {
-        if (this.props.id) {
-            apis.getMovieOrSeriesById(this.props.id)
-                .then((response) => {
-                    this.setState({ ...response.data.data });
-                })
-                .catch((error) => {
-                    this.setState({
-                        doRedirect: true,
-                    });
-                    let msg =
-                        "👎 We couldn't find the " +
-                        this.props.type +
-                        ' you are after!';
-                    toast.error(msg);
-                });
+        if (this.props.imdb_id) {
+            console.log('----> this props', this.props);
+
+            // dispatch({
+            //     type: GET_ONE_PIECE,
+            //     payload: { imdb_id: this.props.imdb_id },
+            // });
+            // apis.getMovieOrSeriesById(this.props.id)
+            //     .then((response) => {
+            //         this.setState({ ...response.data.data });
+            //     })
+            //     .catch((error) => {
+            //         this.setState({
+            //             doRedirect: true,
+            //         });
+            //         let msg =
+            //             "👎 We couldn't find the " +
+            //             this.props.type +
+            //             ' you are after!';
+            //         toast.error(msg);
+            //     });
         } else {
             this.setState({
                 title: '',
@@ -148,8 +155,8 @@ class CardForm extends Component {
         } else {
             //TODO implement this method in parent
             //this.props.addNewPiece(payload);
+            console.log('payload', payload);
             this.props.appendPiece(payload);
-            console.log('should be appended');
 
             this.setState({
                 doRedirect: true,
@@ -636,4 +643,12 @@ const mapStateToProps = (state) => ({
     pieces: state.pieces,
 });
 
-export default connect(mapStateToProps, { appendPiece })(CardForm);
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+    return Object.assign({}, ownProps, stateProps, dispatchProps);
+};
+
+export default connect(
+    mapStateToProps,
+    { appendPiece, getOnePiece },
+    mergeProps
+)(CardForm);

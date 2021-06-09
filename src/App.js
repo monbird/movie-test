@@ -52,12 +52,12 @@ function App() {
                             component={SeriesCreate}
                         />
                         <Route
-                            path="/movie/edit/:id"
+                            path="/movie/edit/:imdb_id"
                             exact
                             component={MovieUpdate}
                         />
                         <Route
-                            path="/series/edit/:id"
+                            path="/series/edit/:imdb_id"
                             exact
                             component={SeriesUpdate}
                         />
