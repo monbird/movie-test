@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
 
 class Links extends Component {
-    // TODO: consider react tolltips and get rid of jquery
+    // TODO: consider react refs and get rid of jquery
     componentDidMount() {
         $('[data-toggle="tooltip"]').tooltip();
     }

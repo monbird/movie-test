@@ -46,7 +46,7 @@ class Filters extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        let initialState = {
             filterOptions: {},
             anyWatched: false,
             activeFilters: {
@@ -55,10 +55,12 @@ class Filters extends Component {
             sortBy: 'recently_added',
         };
 
-        this.FILTERS.map((filter) => {
-            this.state.filterOptions[filter] = [];
-            this.state.activeFilters[filter] = [];
+        this.FILTERS.forEach((filter) => {
+            initialState.filterOptions[filter] = [];
+            initialState.activeFilters[filter] = [];
         });
+
+        this.state = initialState;
 
         this.sortByChange = this.sortByChange.bind(this);
         this.filterChange = this.filterChange.bind(this);
@@ -156,7 +158,7 @@ class Filters extends Component {
             hide_watched: false,
         };
 
-        this.FILTERS.map((filter) => {
+        this.FILTERS.forEach((filter) => {
             emptyFilters[filter] = [];
         });
 
@@ -275,14 +277,16 @@ class Filters extends Component {
                         <div className="float-right valign-parent">
                             <div className="form-group valign">
                                 {!filtersAreEmpty && (
-                                    <a
+                                    <button
+                                        type="button"
+                                        className="buttonAsLink"
                                         href="#"
                                         id="clearFilters"
                                         onClick={this.props.resetFilters}
                                     >
                                         <Icon name="remove" />
                                         &nbsp;Clear filters
-                                    </a>
+                                    </button>
                                 )}
                             </div>
                         </div>

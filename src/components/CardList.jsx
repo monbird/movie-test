@@ -164,7 +164,7 @@ class CardList extends Component {
         let newPieces = [];
         for (let i = 0; i < this.state.piecesAll.length; i++) {
             let newPiece = null;
-            if (this.state.piecesAll[i]._id === data._id) {
+            if (this.state.piecesAll[i].imdb_id === data.imdb_id) {
                 if (action === 'update') {
                     newPiece = data;
                 } else if (action === 'delete') {
@@ -189,7 +189,7 @@ class CardList extends Component {
                 include = this.searchThrough(thisPiece, searchPhrase);
             }
 
-            Object.keys(activeFilters).map((filter) => {
+            Object.keys(activeFilters).forEach((filter) => {
                 if (include) {
                     let filterVal = activeFilters[filter];
                     if (filter === 'hide_watched') {
@@ -305,13 +305,13 @@ class CardList extends Component {
                                 None of your {this.state.type_plural} meet the
                                 selected criteria{' '}
                                 <Icon name="angle double right" />
-                                <a
-                                    href="#"
+                                <button
+                                    type="button"
                                     onClick={this.resetFilters}
-                                    className="no-cards"
+                                    className="no-cards buttonAsLink"
                                 >
                                     Reset your filters{' '}
-                                </a>
+                                </button>
                                 <Icon name="angle double left" />
                             </p>
                         )}

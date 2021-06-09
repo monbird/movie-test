@@ -12,7 +12,11 @@ class Ratings extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col-6 rating-container">
+                <div
+                    className={`col-6 rating-container ${
+                        this.props.source === 'cardBack' ? 'to-the-left' : ''
+                    }`}
+                >
                     {this.props.data.imdb_id && (
                         <a
                             href={`https://www.imdb.com/title/${this.props.data.imdb_id}/`}
@@ -57,7 +61,11 @@ class Ratings extends Component {
                         </div>
                     )}
                 </div>
-                <div className="col-6 rating-container">
+                <div
+                    className={`col-6 rating-container ${
+                        this.props.source === 'cardBack' ? 'to-the-left' : ''
+                    }`}
+                >
                     <div
                         className="btn btn-sm btn-static"
                         data-toggle="tooltip"
@@ -77,20 +85,6 @@ class Ratings extends Component {
                         </div>
                     </div>
                 </div>
-                {/* <div className="col-4 rating-container">
-                    {this.props.data.filmweb_url && (
-                        <a href={this.props.data.filmweb_url} target="_blank" className="btn btn-sm" data-toggle="tooltip" data-placement="top" title="Filmweb" rel="noopener noreferrer">
-                            <img src={icon_fw} alt="filmweb icon" className="rating-icon-img"></img>
-                            <div className="rating pt-1">{!this.props.data.rating_fw && this.props.data.rating_fw !== 0 ? '-' : this.props.data.rating_fw}</div>
-                        </a>
-                    )}
-                    {!this.props.data.filmweb_url && (
-                        <div className="btn btn-sm btn-static" data-toggle="tooltip" data-placement="top" title="Filmweb">
-                            <img src={icon_fw} alt="filmweb icon" className="rating-icon-img"></img>
-                            <div className="rating pt-1">{!this.props.data.rating_fw && this.props.data.rating_fw !== 0 ? '-' : this.props.data.rating_fw}</div>
-                        </div>
-                    )}
-                </div> */}
             </div>
         );
     }

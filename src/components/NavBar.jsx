@@ -36,9 +36,13 @@ class NavBar extends Component {
                     </div>
                 </div>
                 <div id="sleek-nav" className="nav-collapse-overlay">
-                    <a href="#" className="closebtn" onClick={this.closeNav}>
+                    <button
+                        type="button"
+                        className="buttonAsLink closebtn"
+                        onClick={this.closeNav}
+                    >
                         &times;
-                    </a>
+                    </button>
                     <div className="nav-collapse-overlay-content">
                         <Links closeNav={this.closeNav} />
                     </div>

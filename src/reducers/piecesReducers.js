@@ -157,22 +157,20 @@ const initialState = {
             poster: 'https://m.media-amazon.com/images/M/MV5BZjA0OWVhOTAtYWQxNi00YzNhLWI4ZjYtNjFjZTEyYjJlNDVlL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
             rating_imdb: '8.7',
             rating_rt: 94,
-            imdb_id: 'tt0976051',
+            imdb_id: 'tt0073486',
             type: 'movie',
             is_watched: true,
         },
     ],
 };
 
-export default function (state = initialState, action) {
-    console.log('ation:', action);
+export default function reduce(state = initialState, action) {
     switch (action.type) {
         case GET_ONE_PIECE:
-            let dupa = state.piecesList.filter((piece) => {
+            const piece = state.piecesList.filter((piece) => {
                 return piece.imdb_id === action.payload.imdb_id;
             })[0];
-            console.log('dupa:', dupa);
-            return dupa;
+            return piece;
         case GET_ALL_PIECES:
             return state.piecesList;
         case UPDATE_PIECE:

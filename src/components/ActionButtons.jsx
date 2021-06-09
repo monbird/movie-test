@@ -5,8 +5,6 @@ import $ from 'jquery';
 import { toast } from 'react-toastify';
 import { Button, Icon } from 'semantic-ui-react';
 
-import apis from '../api';
-
 class AddNewButton extends Component {
     render() {
         return (
@@ -32,7 +30,7 @@ class PickRandomButton extends Component {
 
         if (this.props.highlightedMovieId) {
             unpickedTitles = titles.filter((title) => {
-                return title._id !== this.props.highlightedMovieId;
+                return title.imdb_id !== this.props.highlightedMovieId;
             });
 
             if (unpickedTitles.length < 1) {
@@ -44,7 +42,7 @@ class PickRandomButton extends Component {
 
         let randomNo = Math.floor(Math.random() * unpickedTitles.length);
         let randomTitle = unpickedTitles[randomNo];
-        this.props.highlightMovie(randomTitle._id);
+        this.props.highlightMovie(randomTitle.imdb_id);
     };
 
     render() {
@@ -86,7 +84,7 @@ class UpdateButton extends Component {
 class DeleteButton extends Component {
     deleteAction = () => {
         $('.modal').modal('hide');
-        this.props.refresher('delete', { _id: this.props.data._id });
+        this.props.refresher('delete', { imdb_id: this.props.data.imdb_id });
 
         let typeTitle =
             this.props.data.type.charAt(0).toUpperCase() +

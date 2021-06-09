@@ -12,21 +12,20 @@ class CardFront extends Component {
             <div
                 className={
                     'card card-front' +
-                    (this.props.highlightedMovieId === this.props.data._id
+                    (this.props.highlightedMovieId === this.props.data.imdb_id
                         ? ' bg-dark border-success'
                         : '') +
                     (this.props.data.is_watched ? ' watched' : '')
                 }
                 id={
-                    this.props.highlightedMovieId === this.props.data._id
+                    this.props.highlightedMovieId === this.props.data.imdb_id
                         ? 'focused-card'
                         : ''
                 }
             >
-                <a
-                    href="#"
+                <div
                     data-toggle="modal"
-                    data-target={`#modal-${this.props.data._id}`}
+                    data-target={`#modal-${this.props.data.imdb_id}`}
                 >
                     <div className="poster-overlay">
                         <PosterImg
@@ -42,7 +41,7 @@ class CardFront extends Component {
                             />
                         </div>
                     </div>
-                </a>
+                </div>
                 <div className="card-body px-3 px-sm-4 py-2 py-sm-3">
                     <Ratings data={this.props.data} />
                     <h5 className="card-title block-ellipsis mt-3">

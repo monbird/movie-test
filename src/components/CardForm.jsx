@@ -9,7 +9,6 @@ import icon_imdb from '../images/icon-imdb.png';
 import icon_rt from '../images/icon-rt.png';
 import ModalImdb from './ModalImbd';
 import { SwitchButton } from './ActionButtons';
-import apis from '../api';
 import { appendPiece, getOnePiece } from '../actions/pieceActions';
 import { GET_ONE_PIECE } from '../actions/types';
 
@@ -33,7 +32,6 @@ class CardForm extends Component {
 
     componentDidMount() {
         if (this.props.imdb_id) {
-            console.log('----> this props', this.props);
 
             // dispatch({
             //     type: GET_ONE_PIECE,
@@ -136,7 +134,7 @@ class CardForm extends Component {
         };
 
         if (this.props.id) {
-            //TODO implement this method in parent
+            // TODO: make this working
             // this.props.updatePiece(imdb_id, payload);
 
             this.setState({
@@ -153,9 +151,6 @@ class CardForm extends Component {
             let msg = '👍 ' + typeTitle + ' "' + shortenedTitle + '" updated!';
             toast.dark(msg);
         } else {
-            //TODO implement this method in parent
-            //this.props.addNewPiece(payload);
-            console.log('payload', payload);
             this.props.appendPiece(payload);
 
             this.setState({
